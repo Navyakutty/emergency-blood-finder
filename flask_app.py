@@ -5,10 +5,9 @@ import os
 app = Flask(__name__)
 app.secret_key = 'emergency_blood_secret_key'
 
-# Setup path for Render (Cloud environment)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, 'database.db')
-app.config['UPLOAD_FOLDER'] = os.path.join(BASE_DIR, 'static', 'uploads')
+# ☁️ CLOUD-SAFE PATH: Render only allows writing to the /tmp directory
+DB_PATH = os.path.join('/tmp', 'database.db')
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'uploads')
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 def get_db():
@@ -34,8 +33,7 @@ def home():
     db.close()
     return render_template('base.html', total_donors=total_donors, total_hospitals=total_hospitals, lives_saved=lives_saved)
 
-# --- Add your other existing routes here (registration, login, dashboard, etc.) ---
-# Ensure all your routes end with db.close()
+# --- Ensure all your existing routes are added below this line ---
 
 if __name__ == '__main__':
     app.run()
