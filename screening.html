@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-xl mx-auto mt-10">
+    <div class="cute-card p-8">
+        <h2 class="text-3xl font-bold text-red-500 mb-4 text-center">Health Screening 🩺</h2>
+        <p class="text-gray-600 mb-8 text-center">For patient safety, please answer these quick questions honestly before accepting the donation request.</p>
+        
+        <form action="/process-screening/{{ request_id }}" method="POST" class="space-y-6">
+            
+            <div class="p-4 bg-red-50 rounded-xl border border-red-100">
+                <p class="font-bold text-gray-700">1. Are you currently feeling sick?</p>
+                <div class="flex gap-6 mt-3">
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="yes" required class="w-4 h-4 text-red-500"> Yes</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="no" class="w-4 h-4 text-red-500"> No</label>
+                </div>
+            </div>
+
+            <div class="p-4 bg-red-50 rounded-xl border border-red-100">
+                <p class="font-bold text-gray-700">2. Have you had a fever in the last 7 days?</p>
+                <div class="flex gap-6 mt-3">
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="yes" required class="w-4 h-4 text-red-500"> Yes</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="no" class="w-4 h-4 text-red-500"> No</label>
+                </div>
+            </div>
+
+            <div class="p-4 bg-red-50 rounded-xl border border-red-100">
+                <p class="font-bold text-gray-700">3. Any recent infections or are you on antibiotics?</p>
+                <div class="flex gap-6 mt-3">
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="yes" required class="w-4 h-4 text-red-500"> Yes</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="no" class="w-4 h-4 text-red-500"> No</label>
+                </div>
+            </div>
+
+            <div class="p-4 bg-red-50 rounded-xl border border-red-100">
+                <p class="font-bold text-gray-700">4. Have you had any surgery recently?</p>
+                <div class="flex gap-6 mt-3">
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q4" value="yes" required class="w-4 h-4 text-red-500"> Yes</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q4" value="no" class="w-4 h-4 text-red-500"> No</label>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full btn-crimson py-3 font-bold text-lg mt-6 shadow-lg">
+                Submit Answers ✨
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

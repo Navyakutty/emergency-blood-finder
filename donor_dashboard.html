@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    
+    <div class="flex justify-between items-center mb-6 border-b-2 border-red-100 pb-4">
+        <div class="flex items-center gap-6">
+            <img src="/static/uploads/{{ donor.profile_pic }}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'" alt="Profile" class="w-20 h-20 rounded-full object-cover border-4 border-pink-200 shadow-sm bg-white">
+            <div>
+                <h2 class="text-4xl font-bold text-gray-800">Hello, {{ donor.name }}! 👋</h2>
+                <p class="text-gray-500 mt-1 text-lg">Your Blood Group: <span class="font-bold text-red-500 bg-red-100 px-3 py-1 rounded-full">{{ donor.blood_group }}</span></p>
+            </div>
+        </div>
+        <a href="/" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-full font-bold hover:bg-gray-300">Log Out</a>
+    </div>
+
+    <div class="cute-card p-6 border-t-4 border-yellow-400 mb-8 bg-yellow-50 flex items-center justify-between shadow-sm">
+        <div>
+            <h3 class="text-xl font-bold text-yellow-700 mb-1">🏆 Your Lifesaver Impact</h3>
+            <p class="text-gray-600 text-sm">Total blood bags successfully donated:</p>
+            <p class="text-3xl font-bold text-gray-800 mt-1">{{ bags_donated }} <span class="text-sm text-gray-500 font-normal">bags</span></p>
+        </div>
+        <div class="text-5xl flex gap-1 flex-wrap justify-end max-w-xs">
+            {% if bags_donated == 0 %}
+                <span class="opacity-30 grayscale">🎒</span>
+            {% else %}
+                {% for _ in range(bags_donated) %}
+                    <span>🩸</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">🚨 Urgent Requests</h3>
+    <div class="space-y-6">
+        {% if requests %}
+            {% for req in requests %}
+                <div class="cute-card p-6 border-l-8 border-red-500 flex flex-col md:flex-row justify-between items-center bg-white">
+                    <div class="mb-4 md:mb-0">
+                        <h4 class="font-bold text-2xl text-gray-800">{{ req.hospital_name }}</h4>
+                        <p class="text-gray-600">📍 {{ req.address }}</p>
+                        <p class="text-gray-600">📞 {{ req.contact_number }}</p>
+                        <div class="mt-3 flex gap-2">
+                            <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold">{{ req.emergency_level }}</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-bold">{{ req.units }} Units Needed</span>
+                        </div>
+                    </div>
+                    <a href="/screen/{{ req.id }}" class="btn-crimson px-8 py-4 font-bold text-lg shadow-md flex items-center gap-2">
+                        <span>🩸</span> I Can Donate
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="cute-card p-8 text-center border-t-4 border-red-400 bg-gray-50">
+                <span class="text-5xl block mb-4">🔔</span>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">No Matches Right Now</h3>
+                <p class="text-gray-600">We will notify you here when a nearby hospital broadcasts a request.</p>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

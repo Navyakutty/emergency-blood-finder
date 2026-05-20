@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h2 class="text-4xl font-bold text-gray-800">Welcome, {{ hospital_name }} 🏥</h2>
+            <p class="text-gray-500">Manage your emergency blood requests here.</p>
+        </div>
+        <a href="/" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-full font-bold hover:bg-gray-300">Log Out</a>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="cute-card p-6 border-t-4 border-red-500 md:col-span-1 h-fit">
+            <h3 class="text-2xl font-bold text-red-500 mb-4 flex items-center gap-2">🚨 Broadcast</h3>
+            <form action="/broadcast-emergency" method="POST" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Blood Group</label>
+                    <select name="blood_group" class="w-full px-4 py-2 mt-1 border border-pink-100 rounded-xl outline-none bg-gray-50">
+                        <option>O+</option><option>O-</option><option>A+</option><option>A-</option>
+                        <option>B+</option><option>B-</option><option>AB+</option><option>AB-</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Urgency Level</label>
+                    <select name="urgency" class="w-full px-4 py-2 mt-1 border border-pink-100 rounded-xl outline-none bg-gray-50">
+                        <option>🔴 Critical (1 hr)</option><option>🟠 Urgent (4 hrs)</option><option>🟡 Normal (24 hrs)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Units Needed</label>
+                    <input type="number" name="units" min="1" value="1" class="w-full px-4 py-2 mt-1 border border-pink-100 rounded-xl outline-none bg-gray-50">
+                </div>
+                <button type="submit" class="w-full btn-crimson py-3 font-bold text-lg mt-4 shadow-lg">Find Donors</button>
+            </form>
+        </div>
+
+        <div class="md:col-span-2 space-y-8">
+            <div class="cute-card p-6 border-t-4 border-green-400 bg-green-50">
+                <h3 class="text-2xl font-bold text-green-700 mb-4 flex items-center gap-2">🚑 Incoming Heroes</h3>
+                <div class="space-y-3">
+                    {% if accepted_donors %}
+                        {% for donor in accepted_donors %}
+                            <div class="p-4 border border-green-200 rounded-xl bg-white flex justify-between items-center shadow-sm">
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-lg">{{ donor.name }} <span class="text-red-500 bg-red-100 px-2 py-1 rounded-full text-sm">{{ donor.blood_group }}</span></h4>
+                                    <p class="text-gray-600 text-sm mt-1">📞 {{ donor.phone }}</p>
+                                </div>
+                                
+                                <div class="text-right flex flex-col items-end">
+                                    <p class="text-sm text-gray-500 mb-2">ETA: <span class="font-bold text-green-600">{{ donor.estimated_arrival_time }}</span></p>
+                                    
+                                    {% if donor.status == 'Accepted' %}
+                                        <form action="/complete-donation/{{ donor.id }}" method="POST">
+                                            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-sm transition-transform hover:scale-105">
+                                                ✅ Mark as Donated
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <span class="bg-gray-200 text-gray-500 px-4 py-1.5 rounded-full text-sm font-bold shadow-inner flex items-center gap-1">
+                                            🎉 Completed
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-sm text-gray-500 text-center italic">No accepted requests yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="cute-card p-6 border-t-4 border-gray-300">
+                <h3 class="text-2xl font-bold text-gray-700 mb-4 flex items-center gap-2">📋 Pending Broadcasts</h3>
+                <div class="space-y-4">
+                    {% if requests %}
+                        {% for req in requests %}
+                            <div class="p-4 border border-gray-200 rounded-xl bg-gray-50 flex justify-between items-center">
+                                <h4 class="font-bold text-gray-700 text-lg">{{ req.blood_group }} <span class="text-sm font-normal">({{ req.units }} units)</span></h4>
+                                <span class="px-3 py-1 bg-white rounded-full text-xs font-bold text-gray-600 border border-gray-200 shadow-sm">{{ req.status }}</span>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-sm text-gray-500 text-center italic">No active requests.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

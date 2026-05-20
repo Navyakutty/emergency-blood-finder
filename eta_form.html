@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto mt-10">
+    <div class="cute-card p-8 text-center border-t-8 border-green-400">
+        <div class="text-6xl mb-4">🦸‍♀️</div>
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">You passed!</h2>
+        <p class="text-gray-600 mb-8">The patient is waiting. When can you reach the hospital?</p>
+        
+        <form action="/submit-eta/{{ request_id }}" method="POST" class="space-y-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 text-left mb-2">Estimated Arrival Time (ETA)</label>
+                <select name="eta" required class="w-full px-4 py-3 border border-pink-100 rounded-xl outline-none focus:ring-red-400 focus:border-red-400 bg-gray-50 text-lg">
+                    <option value="" disabled selected>Select your arrival time...</option>
+                    <option value="15 Minutes">In 15 Minutes 🏃‍♂️</option>
+                    <option value="30 Minutes">In 30 Minutes 🚗</option>
+                    <option value="1 Hour">In 1 Hour 🚌</option>
+                    <option value="Over 1 Hour">More than 1 Hour</option>
+                </select>
+            </div>
+
+            <button type="submit" class="w-full btn-crimson py-3 font-bold text-lg shadow-lg flex justify-center items-center gap-2">
+                <span>📍</span> Confirm & Notify Hospital
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

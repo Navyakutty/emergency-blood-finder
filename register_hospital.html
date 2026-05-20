@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto">
+    <div class="cute-card p-8">
+        <h2 class="text-3xl font-bold text-red-500 mb-6 text-center">Hospital Registration 🏥</h2>
+        <p class="text-center text-gray-500 mb-6">Create a portal to request emergency blood.</p>
+        
+        {% if error %}
+        <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-r-xl shadow-sm">
+            <p class="font-bold text-sm">Oops!</p>
+            <p class="text-sm">{{ error }}</p>
+        </div>
+        {% endif %}
+
+        <form action="/register-hospital" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Hospital Name</label>
+                <input type="text" name="hospital_name" required class="w-full px-4 py-2 mt-1 border border-pink-100 rounded-xl outline-none focus:ring-2 focus:ring-red-400">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Full Address</label>
+                <textarea name="address" required class="w-full px-4 py-2 mt-1 border border-pink-100 rounded-xl outline-none focus:ring-2 focus:ring-red-400"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Contact Number (10 Digits)</label>
+                <input type="tel" name="contact_number" pattern="[0-9]{10}" maxlength="10" title="Please enter exactly 10 digits" required class="w-full px-4 py-2 mt-1 border border-pink-100 rounded-xl outline-none focus:ring-2 focus:ring-red-400">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Create Password</label>
+                <input type="password" name="password" required class="w-full px-4 py-2 mt-1 border border-pink-100 rounded-xl outline-none focus:ring-2 focus:ring-red-400">
+            </div>
+
+            <button type="submit" class="w-full btn-crimson py-3 font-bold text-lg mt-4 shadow-lg">
+                Register Hospital ✨
+            </button>
+        </form>
+        
+        <p class="mt-6 text-center text-sm text-gray-400">
+            Already registered? <a href="/login-hospital" class="text-red-500 underline font-bold">Log in here</a>.
+        </p>
+    </div>
+</div>
+{% endblock %}

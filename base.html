@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Blood Donor Finder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
+        body { background-color: #FFF5F5; font-family: 'Fredoka', sans-serif; } 
+        .cute-card { border-radius: 30px; background: white; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4); }
+        .btn-crimson { background-color: #FF4D4D; color: white; border-radius: 50px; transition: 0.3s; display: inline-block; }
+        .btn-crimson:hover { background-color: #E63939; transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 77, 77, 0.4); }
+        .btn-outline { color: #FF4D4D; border: 2px solid #FF4D4D; border-radius: 50px; transition: 0.3s; display: inline-block; background: white; }
+        .btn-outline:hover { background-color: #FFF0F0; transform: scale(1.05); }
+        .nav-link { color: #666; font-weight: 600; transition: 0.2s; }
+        .nav-link:hover { color: #FF4D4D; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <nav class="p-5 flex justify-between items-center bg-white shadow-sm sticky top-0 z-50">
+        <a href="/" class="text-xl font-bold text-red-500 flex items-center gap-2">
+            <span>🩸</span> Emergency Blood Donor Finder
+        </a>
+        <div class="space-x-6 flex items-center">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/login-hospital" class="nav-link">Hospitals</a>
+            <a href="/login-donor" class="nav-link">Donors</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto mt-10 p-4">
+        {% block content %}
+        <div class="text-center mt-6">
+            <h1 class="text-5xl font-bold text-gray-900 mb-4">Every Drop <span class="text-red-500">Counts.</span></h1>
+            <p class="text-xl text-gray-600 mb-10">Quickly find and connect with local donors during emergencies.</p>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-8 items-stretch">
+                
+                <div class="cute-card p-8 w-80 flex flex-col justify-between text-center">
+                    <div>
+                        <div class="text-5xl mb-4">🌸</div>
+                        <h3 class="font-bold text-2xl mb-2 text-gray-800">For Donors</h3>
+                        <p class="text-sm text-gray-500 mb-8">Register your blood group to help save lives, or log in to your dashboard.</p>
+                    </div>
+                    <div class="flex flex-col gap-3 mt-auto">
+                        <a href="/register" class="btn-crimson py-3 font-bold w-full">Register Now</a>
+                        <a href="/login-donor" class="btn-outline py-3 font-bold w-full">Donor Login</a>
+                    </div>
+                </div>
+
+                <div class="cute-card p-8 w-80 flex flex-col justify-between text-center">
+                    <div>
+                        <div class="text-5xl mb-4">🏥</div>
+                        <h3 class="font-bold text-2xl mb-2 text-gray-800">For Hospitals</h3>
+                        <p class="text-sm text-gray-500 mb-8">Post emergency blood requests and reach nearby donors instantly.</p>
+                    </div>
+                    <div class="flex flex-col gap-3 mt-auto">
+                        <a href="/register-hospital" class="btn-crimson py-3 font-bold w-full">Register Hospital</a>
+                        <a href="/login-hospital" class="btn-outline py-3 font-bold w-full">Hospital Login</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 text-center max-w-4xl mx-auto mb-10">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-red-50">
+                    <div class="text-4xl mb-2">🦸‍♂️</div>
+                    <h4 class="text-4xl font-bold text-gray-800">{{ total_donors | default(0) }}</h4>
+                    <p class="text-gray-500 font-bold mt-1">Heroes Joined</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-red-50">
+                    <div class="text-4xl mb-2">❤️</div>
+                    <h4 class="text-4xl font-bold text-gray-800">{{ lives_saved | default(0) }}</h4>
+                    <p class="text-gray-500 font-bold mt-1">Lives Saved</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-red-50">
+                    <div class="text-4xl mb-2">🏥</div>
+                    <h4 class="text-4xl font-bold text-gray-800">{{ total_hospitals | default(0) }}</h4>
+                    <p class="text-gray-500 font-bold mt-1">Hospitals Active</p>
+                </div>
+            </div>
+
+        </div>
+        {% endblock %}
+    </div>
+
+</body>
+</html>
